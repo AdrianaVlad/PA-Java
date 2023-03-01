@@ -3,7 +3,6 @@
  */
 
 package com.mycompany.homework;
-//import java.util.Scanner;
 /**
  *
  * @author Vlad Adriana
@@ -11,8 +10,6 @@ package com.mycompany.homework;
 public class Homework {
 
     public static void main(String[] args) {
-        //Scanner console = new Scanner (System.in);
-        //int n = console.nextInt();
         long t1=System.currentTimeMillis();
         if(checkInt(args[0])){
             System.out.println("Invalid argument");
