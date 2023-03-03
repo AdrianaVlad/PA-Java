@@ -9,7 +9,7 @@ package com.mycompany.compulsory;
  * @author avjiu
  */
 enum RoadType{
-    Highway, Express, Country;
+    HIGHWAY, EXPRESS, COUNTRY;
 }
 public class Road{
     RoadType type;

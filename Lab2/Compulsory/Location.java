@@ -9,7 +9,7 @@ package com.mycompany.compulsory;
  * @author avjiu
  */
 enum LocationType{
-    City, Airport, GasStation;
+    CITY, AIRPORT, GAS_STATION;
 }
 public class Location{
     LocationType type;
