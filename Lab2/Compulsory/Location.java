@@ -8,13 +8,13 @@ package com.mycompany.compulsory;
  *
  * @author avjiu
  */
-enum LocationType{
-    CITY, AIRPORT, GAS_STATION;
-}
 public class Location{
     LocationType type;
     float xCoord,yCoord;
     String name;
+    public enum LocationType{
+    CITY, AIRPORT, GAS_STATION;
+}
     public Location(LocationType type, float xCoord, float yCoord, String name) {
         this.type = type;
         this.xCoord = xCoord;

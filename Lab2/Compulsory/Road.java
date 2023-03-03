@@ -8,15 +8,15 @@ package com.mycompany.compulsory;
  *
  * @author avjiu
  */
-enum RoadType{
-    HIGHWAY, EXPRESS, COUNTRY;
-}
+
 public class Road{
     RoadType type;
     float length;
     float speedLimit;
     Location end1,end2;
-
+    public enum RoadType{
+    HIGHWAY, EXPRESS, COUNTRY;
+}
     public Road(RoadType type, float length, float speedLimit, Location end1, Location end2) {
         this.type = type;
         this.length = length;
