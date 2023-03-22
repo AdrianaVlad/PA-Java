@@ -52,22 +52,22 @@ public class Problem {
         return result;
     }
     private boolean bfsHK(){
-        Queue<Student> Q = new LinkedList<>();
+        Queue<Student> toVisit = new LinkedList<>();
         for(Student s : studentList)
             if (!result.containsKey(s)){
                 dist.put(s,0);
-                Q.add(s);
+                toVisit.add(s);
             }
             else
                 dist.put(s,INF);
         dist.put(null,INF);
-        while (!Q.isEmpty()){
-            Student s = Q.poll();
+        while (!toVisit.isEmpty()){
+            Student s = toVisit.poll();
             if (dist.get(s) < dist.get(null))
                 for(Project p : s.admissibleProjects)
-                    if (dist.get(keyOfVal(p)) == INF){
+                    if (dist.get(keyOfVal(p)) == INF && projectSet.contains(p)){
                         dist.put(keyOfVal(p), dist.get(s)+1);
-                        Q.add(keyOfVal(p));
+                        toVisit.add(keyOfVal(p));
                     }
         }
         return (dist.get(null) < INF);
