@@ -16,13 +16,11 @@ public class Problem {
     static final int INF = Integer.MAX_VALUE;
     List<Student> studentList;
     Set<Project> projectSet;
-    Map<Student,Project> edges = new HashMap<>();
     Map<Student,Project> result;
     Map<Student,Integer> dist;
     public Problem(List<Student> studentList, Set<Project> projectSet) {
         this.studentList = studentList;
         this.projectSet = projectSet;
-        studentList.forEach(s -> s.admissibleProjects.forEach(p -> edges.put(s,p)));
     }
 
     public Problem() {
@@ -38,7 +36,6 @@ public class Problem {
         studentList.get(1).addAdmissibleProjects(projArray[0]);
         studentList.get(1).addAdmissibleProjects(projArray[1]);
         studentList.get(2).addAdmissibleProjects(projArray[0]);
-        studentList.forEach(s -> s.admissibleProjects.forEach(p -> edges.put(s,p)));
     }
     public Map<Student,Project> solveGreedy(){
         result = new HashMap<>();
