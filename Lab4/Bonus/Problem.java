@@ -13,11 +13,9 @@ import static java.util.stream.Collectors.*;
  */
 
 public class Problem {
-    static final int INF = Integer.MAX_VALUE;
     List<Student> studentList;
     Set<Project> projectSet;
-    Map<Student,Project> result;
-    Map<Student,Integer> dist;
+    
     public Problem(List<Student> studentList, Set<Project> projectSet) {
         this.studentList = studentList;
         this.projectSet = projectSet;
@@ -38,49 +36,16 @@ public class Problem {
         studentList.get(2).addAdmissibleProjects(projArray[0]);
     }
     public Map<Student,Project> solveGreedy(){
-        result = new HashMap<>();
-        dist = new HashMap<>();
-        while(bfsHK()){
-            for(Student s : studentList){
-                if(!result.containsKey(s))
-                    dfsHK(s);
-            }
+        Map<Student,Project> result = new HashMap<>();
+        Map<Project,Boolean> used = new HashMap<>();
+        for(Student s : studentList){
+            for(Project p : s.admissibleProjects)
+                if(projectSet.contains(p) && used.get(p)==null){
+                    result.put(s, p);
+                    used.put(p,true);
+                    break;
+                }
         }
         return result;
-    }
-    private boolean bfsHK(){
-        Queue<Student> toVisit = new LinkedList<>();
-        for(Student s : studentList)
-            if (!result.containsKey(s)){
-                dist.put(s,0);
-                toVisit.add(s);
-            }
-            else
-                dist.put(s,INF);
-        dist.put(null,INF);
-        while (!toVisit.isEmpty()){
-            Student s = toVisit.poll();
-            if (dist.get(s) < dist.get(null))
-                for(Project p : s.admissibleProjects)
-                    if (dist.get(keyOfVal(p)) == INF && projectSet.contains(p)){
-                        dist.put(keyOfVal(p), dist.get(s)+1);
-                        toVisit.add(keyOfVal(p));
-                    }
-        }
-        return (dist.get(null) < INF);
-    }
-    private boolean dfsHK(Student s){
-        if(s==null) return true;
-        for(Project p : s.admissibleProjects)
-            if (dist.get(keyOfVal(p)) ==  dist.get(s)+1)
-                if (dfsHK(keyOfVal(p))){
-                    result.put(s,p);
-                    return true;
-                }
-        dist.put(s,INF);
-        return false;
-    }
-    private Student keyOfVal(Project p){
-        return result.entrySet().stream().filter(e -> Objects.equals(e.getValue(),p)).map(e -> e.getKey()).findFirst().orElse(null);
     }
 }
