@@ -14,7 +14,7 @@ import java.util.Map;
 public class Document {
     String name, location;
     Integer id;
-    Map<String,Object> tags = new HashMap<>();
+    Map<String,String> tags = new HashMap<>();
 
     public Document(String name, String location, int id) {
         this.name = name;
@@ -25,8 +25,8 @@ public class Document {
     public Document() {
     }
     
-    public void addTag(String key, Object obj) {
-        tags.put(key, obj);
+    public void addTag(String key, String val) {
+        tags.put(key, val);
     }
 
     public String getName() {
@@ -53,11 +53,11 @@ public class Document {
         this.id = id;
     }
 
-    public Map<String, Object> getTags() {
+    public Map<String, String> getTags() {
         return tags;
     }
 
-    public void setTags(Map<String, Object> tags) {
+    public void setTags(Map<String, String> tags) {
         this.tags = tags;
     }
 

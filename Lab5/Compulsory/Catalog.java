@@ -20,10 +20,6 @@ public class Catalog {
         this.name=name;
     }
     
-    public void add(Document entry){
-        entries.add(entry);
-    }
-    
     public Document findById(int id) {
         return entries.stream().filter(d -> d.getId().equals(id)).findFirst().orElse(null);
     }
@@ -43,11 +39,5 @@ public class Catalog {
     public void setName(String name) {
         this.name = name;
     }
-
-    @Override
-    public String toString() {
-        return "Catalog{" + "entries=" + entries + ", name=" + name + '}';
-    }
-
     
 }

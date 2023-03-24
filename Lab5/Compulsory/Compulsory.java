@@ -16,26 +16,21 @@ public class Compulsory {
 
     public static void main(String[] args) throws IOException {
         Catalog catalog = new Catalog("Lab5");
-        Document book = new Document("Carte", "C:\\Users\\avjiu\\Documents\\speedrun.txt", 1);
+        Document book = new Document("Carte", "C:\\Users\\avjiu\\Documents\\date intrare.txt", 1);
         Document article  = new Document("Articol", "C:\\Users\\avjiu\\Documents\\ac9cd9.png", 2);
-        catalog.add(book);
-        catalog.add(article);
+        CatalogManager cm = new CatalogManager();
+        cm.add(catalog, book);
+        cm.add(catalog,article);
         try {
-            CatalogUtil.save(catalog, "D:\\uaic\\catalog.json");
+            CatalogManager.save(catalog, "D:\\informatica\\catalog.json");
         } catch (IOException ex) {
             Logger.getLogger(Compulsory.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
             try {
-                Catalog catalog2 = CatalogUtil.load("D:\\uaic\\catalog.json");
-                CatalogUtil.view(catalog2.findById(1));
-            } catch (InvalidCatalogException ex) {
-                Logger.getLogger(Compulsory.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            catch (IOException ex) {
-                Logger.getLogger(Compulsory.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            catch (IllegalArgumentException ex){
+                Catalog catalog2 = CatalogManager.load("D:\\informatica\\catalog.json");
+                CatalogManager.view(catalog2.findById(1));
+            } catch (InvalidCatalogException | IOException | IllegalArgumentException ex) {
                 Logger.getLogger(Compulsory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
