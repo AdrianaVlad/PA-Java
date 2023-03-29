@@ -8,8 +8,18 @@ package com.mycompany.bonus;
  *
  * @author avjiu
  */
-public class ToStringCommand implements CatalogCommand{
-    public static String toString(Catalog c) {
-        return "Catalog{" + "entries=" + c.entries + ", name=" + c.name + '}';
+public class ToStringCommand implements CatalogManager{
+    Catalog c;
+    String representation;
+    public ToStringCommand(Catalog c){
+        this.c=c;
+    }
+    @Override
+    public Catalog execute() {
+        representation="Catalog{" + "entries=" + c.entries + ", name=" + c.name + '}';
+        return c;
+    }
+    public String get(){
+        return representation;
     }
 }

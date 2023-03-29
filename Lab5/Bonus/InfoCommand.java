@@ -20,8 +20,13 @@ import org.xml.sax.SAXException;
  *
  * @author avjiu
  */
-public class InfoCommand implements CatalogCommand{
-    public static void info(Catalog c) throws FileNotFoundException, IOException, SAXException, TikaException{
+public class InfoCommand implements CatalogManager{
+    Catalog c;
+    public InfoCommand(Catalog c){
+        this.c=c;
+    }
+    @Override
+    public Catalog execute() throws FileNotFoundException, IOException, SAXException, TikaException{
         Parser parser = new AutoDetectParser();
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
@@ -38,5 +43,6 @@ public class InfoCommand implements CatalogCommand{
                System.out.println(name + ": " + metadata.get(name));
             }
         }
+        return c;
     }
 }

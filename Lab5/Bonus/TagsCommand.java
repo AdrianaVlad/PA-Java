@@ -20,8 +20,13 @@ import org.xml.sax.SAXException;
  *
  * @author avjiu
  */
-public class TagsCommand implements CatalogCommand{
-    public static void addMetaTags(Catalog c) throws FileNotFoundException, IOException, SAXException, TikaException{
+public class TagsCommand implements CatalogManager{
+    Catalog c;
+    public TagsCommand(Catalog c){
+        this.c=c;
+    }
+    @Override
+    public Catalog execute() throws FileNotFoundException, IOException, SAXException, TikaException{
         Parser parser = new AutoDetectParser();
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
@@ -38,5 +43,6 @@ public class TagsCommand implements CatalogCommand{
                d.tags.put(name, metadata.get(name));
             }
         }
+        return c;
     }
 }

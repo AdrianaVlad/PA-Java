@@ -8,14 +8,8 @@ package com.mycompany.bonus;
  *
  * @author avjiu
  */
-public class ListCommand implements CatalogManager{
-    Catalog c;
-    public ListCommand(Catalog c){
-        this.c=c;
-    }
-    @Override
-    public Catalog execute(){
-        System.out.println(c.entries);
-        return c;
+class InvalidDocumentException extends Exception {
+    public InvalidDocumentException(Exception ex) {
+        super("Invalid document file.", ex);
     }
 }

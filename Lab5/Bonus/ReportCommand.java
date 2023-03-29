@@ -18,17 +18,33 @@ import java.io.Writer;
  *
  * @author avjiu
  */
-public class ReportCommand implements CatalogCommand{
-    public static void report(Catalog c, String path) throws IOException, TemplateException{
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);
-        cfg.setDirectoryForTemplateLoading(new File("C:\\Users\\avjiu\\Documents\\NetBeansProjects\\Compulsory\\src\\main\\java\\com\\mycompany\\compulsory\\templates"));
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        cfg.setLogTemplateExceptions(false);
-        Template temp = cfg.getTemplate("report.ftl");
-        Writer out = new FileWriter(new File(path));
-        temp.process(c, out);
-        Desktop desktop = Desktop.getDesktop();
-        desktop.open(new File(path));
+public class ReportCommand implements CatalogManager{
+    Catalog c;
+    String path;
+    public ReportCommand(Catalog c, String path){
+        this.c=c;
+        this.path=path;
+    }
+    @Override
+    public Catalog execute() throws InvalidCatalogException, InvalidPathException{
+        try {
+            Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);
+            cfg.setDirectoryForTemplateLoading(new File("C:\\Users\\avjiu\\Documents\\NetBeansProjects\\Compulsory\\src\\main\\java\\com\\mycompany\\compulsory\\templates"));
+            cfg.setDefaultEncoding("UTF-8");
+            cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+            cfg.setLogTemplateExceptions(false);
+            Template temp = cfg.getTemplate("report.ftl");
+            Writer out = new FileWriter(new File(path));
+            try {
+                temp.process(c, out);
+            } catch (TemplateException ex) {
+                throw new InvalidCatalogException(ex);
+            }
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(new File(path));
+        } catch (IOException ex) {
+            throw new InvalidPathException(ex);
+        }
+        return c;
     }
 }

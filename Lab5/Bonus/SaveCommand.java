@@ -12,9 +12,21 @@ import java.io.IOException;
  *
  * @author avjiu
  */
-public class SaveCommand implements CatalogCommand{
-    public static void save(Catalog catalog, String path) throws IOException{
+public class SaveCommand implements CatalogManager{
+    Catalog c;
+    String path;
+    public SaveCommand(Catalog c, String path){
+        this.c=c;
+        this.path=path;
+    }
+    @Override
+    public Catalog execute() throws InvalidPathException{
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File(path), catalog);
+        try{
+        objectMapper.writeValue(new File(path), c);}
+        catch(IOException ex){
+            throw new InvalidPathException(ex);
+        }
+        return c;
     }
 }

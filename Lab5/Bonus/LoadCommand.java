@@ -12,8 +12,13 @@ import java.io.IOException;
  *
  * @author avjiu
  */
-public class LoadCommand implements CatalogCommand{
-    public static Catalog load(String path) throws InvalidCatalogException{
+public class LoadCommand implements CatalogManager{
+    String path;
+    public LoadCommand(String path){
+        this.path=path;
+    }
+    @Override
+    public Catalog execute() throws InvalidCatalogException{
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.readValue(new File(path), Catalog.class);
