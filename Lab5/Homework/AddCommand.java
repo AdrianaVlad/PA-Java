@@ -8,8 +8,16 @@ package com.mycompany.homework;
  *
  * @author avjiu
  */
-public class AddCommand implements CatalogCommand{
-    public static void add(Catalog c, Document entry){
+public class AddCommand implements CatalogManager{
+    Catalog c;
+    Document entry;
+    public AddCommand(Catalog c, Document entry){
+        this.c=c;
+        this.entry=entry;
+    }
+    @Override
+    public Catalog execute(){
         c.entries.add(entry);
+        return c;
     }
 }

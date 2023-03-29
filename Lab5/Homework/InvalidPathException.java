@@ -4,8 +4,6 @@
  */
 package com.mycompany.homework;
 
-import java.io.IOException;
-
 /**
  *
  * @author avjiu

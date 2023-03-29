@@ -17,19 +17,19 @@ public class Homework {
         Catalog catalog = new Catalog("Lab5");
         Document book = new Document("Carte", "C:\\Users\\avjiu\\Documents\\speedrun.txt", 1);
         Document article  = new Document("Articol", "C:\\Users\\avjiu\\Documents\\ac9cd9.png", 2);
-        AddCommand.add(catalog, book);
-        AddCommand.add(catalog,article);
+        new AddCommand(catalog,book).execute();
+        new AddCommand(catalog, article).execute();
         try {
-            SaveCommand.save(catalog, "D:\\uaic\\catalog.json");
+            new SaveCommand(catalog, "D:\\uaic\\catalog.json").execute();
         } catch (InvalidPathException ex) {
             Logger.getLogger(Homework.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
             try {
-                Catalog catalog2 = LoadCommand.load("D:\\uaic\\catalog.json");
-                ViewCommand.view(catalog2.findById(1));
-                ListCommand.list(catalog2);
-                ReportCommand.report(catalog2, "D:\\uaic\\catalog.html");
+                Catalog catalog2 = new LoadCommand("D:\\uaic\\catalog.json").execute();
+                new ViewCommand(catalog2.findById(1)).execute();
+                new ListCommand(catalog2).execute();
+                new ReportCommand(catalog2, "D:\\uaic\\catalog.html").execute();
             } catch (InvalidCatalogException | InvalidDocumentException | InvalidPathException ex) {
                 Logger.getLogger(Homework.class.getName()).log(Level.SEVERE, null, ex);
             }

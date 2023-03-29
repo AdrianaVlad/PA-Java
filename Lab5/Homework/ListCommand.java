@@ -8,8 +8,14 @@ package com.mycompany.homework;
  *
  * @author avjiu
  */
-public class ListCommand implements CatalogCommand{
-    public static void list(Catalog c){
+public class ListCommand implements CatalogManager{
+    Catalog c;
+    public ListCommand(Catalog c){
+        this.c=c;
+    }
+    @Override
+    public Catalog execute(){
         System.out.println(c.entries);
+        return c;
     }
 }

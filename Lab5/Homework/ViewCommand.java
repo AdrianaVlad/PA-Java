@@ -12,13 +12,19 @@ import java.io.IOException;
  *
  * @author Vlad Adriana
  */
-public class ViewCommand implements CatalogCommand{  
-    public static void view(Document doc) throws InvalidDocumentException{
+public class ViewCommand implements CatalogManager{
+    Document doc;
+    public ViewCommand (Document doc){
+        this.doc=doc;
+    }
+    @Override
+    public Catalog execute() throws InvalidDocumentException{
         Desktop desktop = Desktop.getDesktop();
         try{
         desktop.open(new File(doc.location));}
         catch (IOException ex){
             throw new InvalidDocumentException(ex);
         }
+        return null;
     }
 }
