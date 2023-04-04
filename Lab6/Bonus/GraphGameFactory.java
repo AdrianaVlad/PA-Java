@@ -8,7 +8,7 @@ import java.awt.Color;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public class GraphGameFactory implements Factory{
     @Override

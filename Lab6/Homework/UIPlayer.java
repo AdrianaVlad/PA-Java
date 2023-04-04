@@ -9,7 +9,7 @@ import java.awt.Polygon;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public class UIPlayer extends Player{
     

@@ -6,7 +6,6 @@ package com.mycompany.bonus;
 
 import java.awt.Font;
 import java.awt.Polygon;
-import java.awt.geom.Area;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.swing.JLabel;
@@ -14,7 +13,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public class GraphGame extends JPanel implements Game, Serializable{
     final MainFrame frame;

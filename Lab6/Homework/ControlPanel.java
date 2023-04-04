@@ -4,18 +4,14 @@
  */
 package com.mycompany.homework;
 
-import static com.mycompany.homework.DrawingPanel.H;
-import static com.mycompany.homework.DrawingPanel.W;
 import static java.awt.BorderLayout.EAST;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -30,7 +26,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public class ControlPanel extends JPanel {
 

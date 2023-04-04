@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public abstract class Player implements Serializable{
     Color color;

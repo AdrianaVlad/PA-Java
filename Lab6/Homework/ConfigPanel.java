@@ -15,7 +15,7 @@ import javax.swing.SpinnerNumberModel;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public class ConfigPanel extends JPanel {
 

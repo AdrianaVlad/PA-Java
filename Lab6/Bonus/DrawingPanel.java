@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public class DrawingPanel extends JPanel implements Serializable {
 

@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public class MainFrame extends JFrame {
 
@@ -17,7 +17,6 @@ public class MainFrame extends JFrame {
     ControlPanel controlPanel;
     DrawingPanel canvas;
     GraphGame game;
-    GraphGameFactory factory;
     
     public MainFrame() {
         super("My Drawing Application");

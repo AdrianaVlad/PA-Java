@@ -6,7 +6,7 @@ package com.mycompany.bonus;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public interface Factory {
     public Game create(MainFrame frame);

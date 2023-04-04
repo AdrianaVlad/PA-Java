@@ -6,7 +6,7 @@ package com.mycompany.homework;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public interface Game {
     public void onTurn();

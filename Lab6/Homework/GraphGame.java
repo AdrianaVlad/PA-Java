@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author avjiu
+ * @authorVlad Adriana
  */
 public class GraphGame extends JPanel implements Game, Serializable{
     final MainFrame frame;
@@ -56,13 +56,11 @@ public class GraphGame extends JPanel implements Game, Serializable{
 
     @Override
     public void onWin() {
-        //dupa fiecare click cautam triunghi. if found display winner (vedem a cui a fost tura)
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void onLoss() {
-        //better luck next time sadge
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

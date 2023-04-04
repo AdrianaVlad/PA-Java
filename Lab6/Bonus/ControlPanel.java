@@ -26,7 +26,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public class ControlPanel extends JPanel {
 
