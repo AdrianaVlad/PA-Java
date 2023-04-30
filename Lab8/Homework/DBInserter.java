@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author avjiu
+ * @author Vlad Adriana
  */
 public class DBInserter {
     public void insert(String filePath) throws SQLException{
