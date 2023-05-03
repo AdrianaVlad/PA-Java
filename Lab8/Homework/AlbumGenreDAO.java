@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.homework;
+package com.mycompany.bonus;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,25 +26,25 @@ public class AlbumGenreDAO {
             pstmt.executeUpdate();
         }
     }
-    public List<AlbumGenre> findByIdAlbum(int idAlbum) throws SQLException {
+    public List<AlbumGenre> findByIdAlbum(int albumId) throws SQLException {
         Connection con = Database.getConnection();
         List<AlbumGenre> lines = new ArrayList<>();
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(
-                "select * from album_genre where id_album=" + idAlbum)) {
+                "select * from album_genre where album_id=" + albumId)) {
             while(rs.next()){
-                lines.add(new AlbumGenre(idAlbum,rs.getInt(2)));
+                lines.add(new AlbumGenre(albumId,rs.getInt(2)));
             }
             rs.close();
             return lines;
         }
     }
-    public List<AlbumGenre> findByIdGenre(int idGenre) throws SQLException {
+    public List<AlbumGenre> findByIdGenre(int genreId) throws SQLException {
         Connection con = Database.getConnection();
          List<AlbumGenre> lines = new ArrayList<>();
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(
-                "select * from album_genre where id_genre=" + idGenre)) {
+                "select * from album_genre where genre_id=" + genreId)) {
             if(rs.next()){
-                lines.add(new AlbumGenre(rs.getInt(1),idGenre));
+                lines.add(new AlbumGenre(rs.getInt(1),genreId));
             }
             rs.close();
             return lines;
