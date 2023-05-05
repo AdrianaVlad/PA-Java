@@ -4,8 +4,6 @@
 package com.mycompany.homework;
 
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author Vlad Adriana
@@ -16,13 +14,11 @@ public class Homework {
             var artists = new ArtistDAO();
             artists.create(new Artist(artists.findNextId(),"Pink Floyd"));
             artists.create(new Artist(artists.findNextId(),"Michael Jackson"));
-            Database.getConnection().commit();
             var genres = new GenreDAO();
             genres.create(new Genre(genres.findNextId(),"Rock"));
             genres.create(new Genre(genres.findNextId(),"Funk"));
             genres.create(new Genre(genres.findNextId(),"Soul"));
             genres.create(new Genre(genres.findNextId(),"Pop"));
-            Database.getConnection().commit();
             var albums = new AlbumDAO();
             var albumGenres = new AlbumGenreDAO();
             int newId = albums.findNextId();
@@ -33,20 +29,12 @@ public class Homework {
             albumGenres.create(new AlbumGenre(newId,genres.findByName("Funk").id));
             albumGenres.create(new AlbumGenre(newId,genres.findByName("Soul").id));
             albumGenres.create(new AlbumGenre(newId,genres.findByName("Pop").id));
-            Database.getConnection().commit();
             String databasePath = "C:\\Users\\avjiu\\Documents\\albumlist.csv";
             var inserter = new DBInserter();
             inserter.insert(databasePath);
             System.out.println(albums.findAll());
-            Database.getConnection().commit();
-            Database.getConnection().close();
         } catch (SQLException e) {
             System.err.println(e);
-            try {
-                Database.getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Homework.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 }

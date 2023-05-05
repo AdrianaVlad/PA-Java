@@ -31,6 +31,7 @@ public class AlbumDAO extends TableDAO<Album>{
             pstmt.setString(3,line.title);
             pstmt.setInt(4,line.artistId);
             pstmt.executeUpdate();
+            con.close();
         }
     }
 
@@ -44,6 +45,7 @@ public class AlbumDAO extends TableDAO<Album>{
                 lines.add(new Album(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4)));
             }
             rs.close();
+            con.close();
             return lines;
         }
     }
@@ -57,9 +59,11 @@ public class AlbumDAO extends TableDAO<Album>{
             if(rs.next()){
                 var album =new Album(rs.getInt(1),rs.getInt(2),title,rs.getInt(4));
                 rs.close();
+                con.close();
                 return album;
             }
             rs.close();
+            con.close();
             return null;
         }
     }
@@ -72,9 +76,11 @@ public class AlbumDAO extends TableDAO<Album>{
             if(rs.next()){
                 var album =new Album(id,rs.getInt(2),rs.getString(3),rs.getInt(4));
                 rs.close();
+                con.close();
                 return album;
             }
             rs.close();
+            con.close();
             return null;
         }
     }
@@ -88,6 +94,7 @@ public class AlbumDAO extends TableDAO<Album>{
             rs.next();
             newid = rs.getInt(1);
         }
+        con.close();
         return newid+1;
         
     }

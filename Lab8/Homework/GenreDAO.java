@@ -26,6 +26,7 @@ public class GenreDAO extends TableDAO<Genre>{
             pstmt.setInt(1, line.id);
             pstmt.setString(2, line.name);
             pstmt.executeUpdate();
+            con.close();
         }
     }
 
@@ -39,6 +40,7 @@ public class GenreDAO extends TableDAO<Genre>{
                 lines.add(new Genre(rs.getInt(1),rs.getString(2)));
             }
             rs.close();
+            con.close();
             return lines;
         }
     }
@@ -52,9 +54,11 @@ public class GenreDAO extends TableDAO<Genre>{
             if(rs.next()){
                 var genre =new Genre(rs.getInt(1),rs.getString(2));
                 rs.close();
+                con.close();
                 return genre;
             }
             rs.close();
+            con.close();
             return null;
         }
     }
@@ -67,9 +71,11 @@ public class GenreDAO extends TableDAO<Genre>{
             if(rs.next()){
                 var genre =new Genre(rs.getInt(1),rs.getString(2));
                 rs.close();
+                con.close();
                 return genre;
             }
             rs.close();
+            con.close();
             return null;
         }
     }
@@ -83,6 +89,7 @@ public class GenreDAO extends TableDAO<Genre>{
             rs.next();
             newid = rs.getInt(1);
         }
+        con.close();
         return newid+1;
     }
 }
