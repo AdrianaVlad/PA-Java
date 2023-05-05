@@ -33,10 +33,12 @@ public class Robot implements Runnable{
         int checkedDirections=0;
         System.out.println("Robot " + name + ": Placed on row " + row + " and col " + col);
         while (!done) {
-            if(running){
             if(System.currentTimeMillis()-activatedAt>timer){
                 running=!running;
+                timer=Integer.MAX_VALUE;
+                activatedAt=Long.MAX_VALUE;
             }
+            if(running){
             while(checkedDirections<4 && !explore.exploredAll()){
                 if(inBounds(rowChange[direction],colChange[direction])&&noRobots(rowChange[direction],colChange[direction])){
                     if((explore.getMap().visit(row+rowChange[direction], col+colChange[direction], this))){
