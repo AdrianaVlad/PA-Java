@@ -24,6 +24,7 @@ public class PlaylistAlbumsDAO {
             pstmt.setInt(1, line.playlistId);
             pstmt.setInt(2, line.albumId);
             pstmt.executeUpdate();
+            con.close();
         }
     }
     public List<PlaylistAlbums> findByIdAlbum(int albumId) throws SQLException {
@@ -35,6 +36,7 @@ public class PlaylistAlbumsDAO {
                 lines.add(new PlaylistAlbums(rs.getInt(1),albumId));
             }
             rs.close();
+            con.close();
             return lines;
         }
     }
@@ -47,6 +49,7 @@ public class PlaylistAlbumsDAO {
                 lines.add(new PlaylistAlbums(idPlaylist,rs.getInt(2)));
             }
             rs.close();
+            con.close();
             return lines;
         }
     }

@@ -14,13 +14,11 @@ import java.sql.SQLException;
  * @author Vlad Adriana
  */
 public class Database {
-    static HikariDataSource ds;
+    private static HikariDataSource ds;
     private static Database instance = null;
-    private static Connection connection = null;
     private Database() throws SQLException {
         HikariConfig config = new HikariConfig();
-        config.setMaximumPoolSize(100);
-        config.setAutoCommit(false);
+        config.setMaximumPoolSize(10);
         config.setDriverClassName("oracle.jdbc.driver.OracleDriver");
         config.setJdbcUrl("jdbc:oracle:thin:@localhost:1521:xe");
         config.addDataSourceProperty("serverName", "localhost");
@@ -30,11 +28,10 @@ public class Database {
         config.addDataSourceProperty("password", "music");
         config.addDataSourceProperty("driverType", "thin");
         ds=new HikariDataSource(config);
-        connection = ds.getConnection();
     }
     public static Connection getConnection() throws SQLException{
         if (instance==null)
             instance = new Database();
-        return connection;
+        return ds.getConnection();
     }
 }

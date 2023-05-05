@@ -27,6 +27,7 @@ public class PlaylistDAO extends TableDAO<Playlist>{
             pstmt.setString(2, line.name);
             pstmt.setTimestamp(3,line.creationTimestamp);
             pstmt.executeUpdate();
+            con.close();
         }
     }
 
@@ -40,6 +41,7 @@ public class PlaylistDAO extends TableDAO<Playlist>{
                 lines.add(new Playlist(rs.getInt(1),rs.getString(2),rs.getTimestamp(3)));
             }
             rs.close();
+            con.close();
             return lines;
         }
     }
@@ -53,9 +55,11 @@ public class PlaylistDAO extends TableDAO<Playlist>{
             if(rs.next()){
                 var playlist =new Playlist(rs.getInt(1),name,rs.getTimestamp(3));
                 rs.close();
+                con.close();
                 return playlist;
             }
             rs.close();
+            con.close();
             return null;
         }
     }
@@ -68,9 +72,11 @@ public class PlaylistDAO extends TableDAO<Playlist>{
             if(rs.next()){
                 var playlist =new Playlist(id,rs.getString(2),rs.getTimestamp(3));
                 rs.close();
+                con.close();
                 return playlist;
             }
             rs.close();
+            con.close();
             return null;
         }
     }
@@ -84,6 +90,7 @@ public class PlaylistDAO extends TableDAO<Playlist>{
             rs.next();
             newid = rs.getInt(1);
         }
+        con.close();
         return newid+1;
     }
     

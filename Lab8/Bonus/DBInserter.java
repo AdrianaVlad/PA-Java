@@ -77,7 +77,6 @@ public class DBInserter {
                         }
                         else break;
                     }
-                    Database.getConnection().commit();
                 }
             }
         } catch (IOException ex) {

@@ -19,13 +19,11 @@ public class Bonus {
             var artists = new ArtistDAO();
             artists.create(new Artist(artists.findNextId(),"Pink Floyd"));
             artists.create(new Artist(artists.findNextId(),"Michael Jackson"));
-            Database.getConnection().commit();
             var genres = new GenreDAO();
             genres.create(new Genre(genres.findNextId(),"Rock"));
             genres.create(new Genre(genres.findNextId(),"Funk"));
             genres.create(new Genre(genres.findNextId(),"Soul"));
             genres.create(new Genre(genres.findNextId(),"Pop"));
-            Database.getConnection().commit();
             var albums = new AlbumDAO();
             var albumGenres = new AlbumGenreDAO();
             int newId = albums.findNextId();
@@ -36,15 +34,13 @@ public class Bonus {
             albumGenres.create(new AlbumGenre(newId,genres.findByName("Funk").id));
             albumGenres.create(new AlbumGenre(newId,genres.findByName("Soul").id));
             albumGenres.create(new AlbumGenre(newId,genres.findByName("Pop").id));
-            Database.getConnection().commit();
             String databasePath = "C:\\Users\\avjiu\\Documents\\albumlist.csv";
             var inserter = new DBInserter();
             inserter.insert(databasePath);
-            Database.getConnection().commit();
             System.out.println(albums.findAll());
             var playlists = new PlaylistDAO();
             var playlistAlbums = new PlaylistAlbumsDAO();
-            List<ArrayList<Album>> albumSets = PlaylistGenerator.generateAlbumSets(albums.findAll().subList(0, 30));
+            List<ArrayList<Album>> albumSets = PlaylistGenerator.generateAlbumSets(albums.findAll().subList(0, 25));
             for(int i=0;i<albumSets.size();i++){
                 newId = playlists.findNextId();
                 playlists.create(new Playlist(newId,"Generated playlist nr " + (i+1),new Timestamp(System.currentTimeMillis())));
@@ -52,8 +48,6 @@ public class Bonus {
                     playlistAlbums.create(new PlaylistAlbums(newId,album.id));
             }
             System.out.println(playlists.findAll());
-            Database.getConnection().commit();
-            Database.getConnection().close();
         } catch (SQLException e) {
             System.err.println(e);
             try {

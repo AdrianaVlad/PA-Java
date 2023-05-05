@@ -24,6 +24,7 @@ public class AlbumGenreDAO {
             pstmt.setInt(1, line.albumId);
             pstmt.setInt(2, line.genreId);
             pstmt.executeUpdate();
+            con.close();
         }
     }
     public List<AlbumGenre> findByIdAlbum(int albumId) throws SQLException {
@@ -35,6 +36,7 @@ public class AlbumGenreDAO {
                 lines.add(new AlbumGenre(albumId,rs.getInt(2)));
             }
             rs.close();
+            con.close();
             return lines;
         }
     }
@@ -47,6 +49,7 @@ public class AlbumGenreDAO {
                 lines.add(new AlbumGenre(rs.getInt(1),genreId));
             }
             rs.close();
+            con.close();
             return lines;
         }
     }
