@@ -57,7 +57,8 @@ public class Board extends JPanel{
     }
     public void place(int lin, int col, Color color){
         graphics.setColor(color);
-        
+        lin--;
+        col--;
         graphics.fillOval(lin*(H/nrLines)+7,col*(H/nrLines)+7,H/nrLines-4, H/nrLines-4);
         repaint();
     }
