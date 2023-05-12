@@ -75,7 +75,7 @@ public class ClientThread extends Thread{
                             else{
                                 game.setPlayer1(new Player(this,Color.RED));
                                 playerNr=1;
-                                response="Game started! You are Player1. It's your turn!";
+                                response="Game started! You are Player1. You have 1 minute. It's your turn!";
                                 game.getPlayer(playerNr).timer.start();
                                 while(!game.isGameReady()){
                                     try {
@@ -102,7 +102,7 @@ public class ClientThread extends Thread{
                             else{
                                 game.setPlayer2(new Player(this,Color.BLUE));
                                 playerNr=2;
-                                response="Game started! You are Player2. Please wait your turn!";
+                                response="Game started! You are Player2. You will have 1 minute. Please wait your turn!";
                                 game.getPlayer(playerNr).timer.start();
                                 game.setTurn(1);
                             }
