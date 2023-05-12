@@ -15,6 +15,7 @@ import javax.persistence.EntityManagerFactory;
  * @param <T>
  */
 public abstract class AbstractRepository <T extends AbstractEntity>{
+    public String name;
     public EntityManagerFactory emf = EntityManagerFactoryManager.getEntityManagerFactory();
     public EntityManager em = emf.createEntityManager();
     public void create(T line) throws SQLException{
@@ -27,8 +28,16 @@ public abstract class AbstractRepository <T extends AbstractEntity>{
             em.getTransaction().rollback();
         }
     }
-    public abstract List<T> findAll() throws SQLException;
-    public abstract List<T> findByName(String name) throws SQLException;
-    public abstract T findById(int id) throws SQLException;
-    public abstract int findMaxId() throws SQLException;
+    public List<T> findAll() throws SQLException{
+        return (List<T>)em.createNamedQuery(name+".findAll").getResultList();
+    }
+    public List<T> findByName(String name) throws SQLException{
+        return (List<T>)em.createNamedQuery(this.name+".findByName").setParameter(1,name).getResultList();
+    }
+    public T findById(int id) throws SQLException{
+        return (T)em.createNamedQuery(name+".findById").setParameter(1,id).getSingleResult();
+    }
+    public int findMaxId() throws SQLException{
+        return (int)em.createNamedQuery(name+".findMaxId",Integer.class).getSingleResult();
+    }
 }
