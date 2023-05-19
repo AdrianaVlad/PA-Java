@@ -17,6 +17,7 @@ import java.util.List;
 public class GameServer {
     public static final int PORT = 2434;
     public List<Game> gameList = new ArrayList<>();
+    public List<Player> playerList = new ArrayList<>();
     public GameServer() throws IOException{
         try(ServerSocket serverSocket = new ServerSocket(PORT)) {
             while(true){
@@ -36,6 +37,15 @@ public class GameServer {
         Game game = new Game(name);
         gameList.add(game);
         return game;
+    }
+    public Player createPlayer(String name){
+        for(Player player:playerList){
+            if(player.name.equals(name))
+                return null;
+        }
+        Player player = new Player(name,playerList.size()+1);
+        playerList.add(player);
+        return player;
     }
     public Game findGame(String name){
         for(Game game:gameList){

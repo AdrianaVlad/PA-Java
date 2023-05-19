@@ -12,12 +12,22 @@ import java.awt.Color;
  */
 public class Player {
     ClientThread thread;
+    int id;
+    String name;
     Color color;
-    long startedAt;
     Timer timer = new Timer(this);
+    public Player(String name, int id){
+        this.name = name;
+        this.id=id;
+    }
     public Player(ClientThread thread,Color c){
         this.thread=thread;
         this.color=c;
-        startedAt=System.currentTimeMillis();
+    }
+    public void setThread(ClientThread thread){
+        this.thread=thread;
+    }
+    public void setColor(Color color){
+        this.color=color;
     }
 }
