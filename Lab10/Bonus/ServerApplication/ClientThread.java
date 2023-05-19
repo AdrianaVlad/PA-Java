@@ -20,6 +20,7 @@ public class ClientThread extends Thread{
     private Socket socket = null;
     private boolean running=true;
     private Game game;
+    private Player player;
     private final GameServer server;
     private int playerNr;
     BufferedReader in;
@@ -50,6 +51,17 @@ public class ClientThread extends Thread{
     public void run(){
         try {
             String request,response;
+            out.println("Enter player name:");
+            out.flush();
+            request = in.readLine();
+            while((player=server.createPlayer(request))==null){
+                out.println("Name taken, try a different one:");
+                out.flush();
+                request = in.readLine();
+            }
+            player.setThread(this);
+            out.println("Welcome to gomoku! Your id is "+player.id);
+            out.flush();
             while(running){
                 request = in.readLine();
                 if(game!=null && game.outOfTime(playerNr) && game.isTurn(playerNr)){
@@ -63,12 +75,14 @@ public class ClientThread extends Thread{
                             response="Please do this when you're not in game, you're on a timer!";
                         }
                         else{
-                            response="Please specify: number of players, max games per player per day, max days for tournament (ex: 10,5,3)";
+                            response="Please specify: number of players, max games per player per day, max days for tournament (ex: 10,5,3). Put in number of players=0 to create a tournament for the players currently registered.";
                             out.println(response);
                             out.flush();
                             request = in.readLine();
                             String parts[] = request.split(",",3);
                             int n=Integer.parseInt(parts[0]),p=Integer.parseInt(parts[1]),d=Integer.parseInt(parts[2]);
+                            if(n==0)
+                                n=server.playerList.size();
                             tournament = new TournamentManager(n,p,d);
                             if(tournament.generateSchedule())
                                 response="Tournament schedule: \n"+tournament.displaySchedule();
@@ -95,7 +109,8 @@ public class ClientThread extends Thread{
                             if(game==null)
                                 response="There already is a game with that name! Try joining it or choosing a different name";
                             else{
-                                game.setPlayer1(new Player(this,Color.RED));
+                                game.setPlayer1(player);
+                                player.setColor(Color.RED);
                                 playerNr=1;
                                 response="Game started! You are Player1. You have 1 minute. It's your turn!";
                                 game.getPlayer(playerNr).timer.start();
@@ -122,7 +137,8 @@ public class ClientThread extends Thread{
                             if(game==null)
                                 response="There is no game with that name! Try creating it or choosing a different name";
                             else{
-                                game.setPlayer2(new Player(this,Color.BLUE));
+                                game.setPlayer2(player);
+                                player.setColor(Color.BLUE);
                                 playerNr=2;
                                 response="Game started! You are Player2. You will have 1 minute. Please wait your turn!";
                                 game.getPlayer(playerNr).timer.start();
