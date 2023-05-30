@@ -1,6 +1,5 @@
 package repositories;
 
-import com.mycompany.elevatorsimulator.AbstractRepository;
 import entities.Elevators;
 import java.sql.SQLException;
 import java.util.List;

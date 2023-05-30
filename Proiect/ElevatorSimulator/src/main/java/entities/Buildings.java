@@ -1,6 +1,6 @@
 package entities;
 
-import com.mycompany.elevatorsimulator.EntityInterface;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -44,14 +44,9 @@ public class Buildings implements Serializable,EntityInterface  {
     private List<Accounts> accountsList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "buildingId")
     private List<Elevators> elevatorsList;
-
-    public Buildings() {
+    public Buildings(){
+        
     }
-
-    public Buildings(Integer id) {
-        this.id = id;
-    }
-
     public Buildings(Integer id, String name) {
         this.id = id;
         this.name = name;
@@ -72,7 +67,7 @@ public class Buildings implements Serializable,EntityInterface  {
     public void setName(String name) {
         this.name = name;
     }
-
+    @JsonIgnore
     public List<Accounts> getAccountsList() {
         return accountsList;
     }
@@ -80,7 +75,7 @@ public class Buildings implements Serializable,EntityInterface  {
     public void setAccountsList(List<Accounts> accountsList) {
         this.accountsList = accountsList;
     }
-
+    @JsonIgnore
     public List<Elevators> getElevatorsList() {
         return elevatorsList;
     }

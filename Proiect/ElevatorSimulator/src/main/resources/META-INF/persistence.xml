@@ -6,11 +6,11 @@
     <class>entities.Accounts</class>
     <class>entities.Buildings</class>
     <properties>
+      <property name="eclipselink.logging.level" value="FINE"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
       <property name="javax.persistence.jdbc.user" value="lifturi"/>
       <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
       <property name="javax.persistence.jdbc.password" value="lifturi"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

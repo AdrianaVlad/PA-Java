@@ -1,6 +1,6 @@
 package entities;
 
-import com.mycompany.elevatorsimulator.EntityInterface ;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -43,11 +43,7 @@ public class Accounts implements Serializable, EntityInterface{
 
     public Accounts() {
     }
-
-    public Accounts(Integer id) {
-        this.id = id;
-    }
-
+    
     public Accounts(Integer id, String name, String password, String type) {
         this.id = id;
         this.name = name;
@@ -86,7 +82,7 @@ public class Accounts implements Serializable, EntityInterface{
     public void setType(String type) {
         this.type = type;
     }
-
+    @JsonIgnore
     public List<Buildings> getBuildingsList() {
         return buildingsList;
     }

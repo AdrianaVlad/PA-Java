@@ -62,11 +62,12 @@ compound trigger
         loop
             fetch list_accounts into v_id;
             exit when list_accounts%NOTFOUND;
-            UPDATE accounts set id=v_min_id+1 where id=v_id;
+            UPDATE accounts set id=v_min_id where id=v_id;
+            v_min_id:=v_min_id+1;
         end loop;        
     end after statement;
 end delete_accounts;
-
+/
 create or replace trigger delete_buildings
 for delete on buildings
 compound trigger
@@ -87,11 +88,12 @@ compound trigger
         loop
             fetch list_buildings into v_id;
             exit when list_buildings%NOTFOUND;
-            UPDATE buildings set id=v_min_id+1 where id=v_id;
+            UPDATE buildings set id=v_min_id where id=v_id;
+            v_min_id:=v_min_id+1;
         end loop;        
     end after statement;
 end delete_buildings;
-
+/
 create or replace trigger delete_elevators
 for delete on elevators
 compound trigger
@@ -112,18 +114,20 @@ compound trigger
         loop
             fetch list_elevators into v_id;
             exit when list_elevators%NOTFOUND;
-            UPDATE elevators set id=v_min_id+1 where id=v_id;
+            UPDATE elevators set id=v_min_id where id=v_id;
+            v_min_id:=v_min_id+1;
         end loop;        
     end after statement;
 end delete_elevators;
-
+/
 create or replace trigger update_id_accounts
 after update of id on accounts
 for each row
 begin
     update admin_rights set account_id = :new.id where account_id = :old.id;
 end;
-
+/
+ALTER SESSION SET PLSCOPE_SETTINGS = 'IDENTIFIERS:NONE';
 create or replace trigger update_id_buildings
 after update of id on buildings
 for each row
@@ -131,10 +135,16 @@ begin
     update admin_rights set building_id = :new.id where building_id = :old.id;
     update elevators set building_id = :new.id where building_id = :old.id;
 end;
-
+/
 create or replace trigger add_overseer_rights
 after insert on buildings
 for each row
 begin
     insert into admin_rights values (1,:new.id);
 end;
+/
+SELECT ID, NAME, PASSWORD, TYPE FROM ACCOUNTS WHERE name='overseer';
+select * from accounts;
+select * from buildings;
+select * from elevators;
+select * from admin_rights;

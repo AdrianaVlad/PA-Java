@@ -1,8 +1,6 @@
 package entities;
 
-import com.mycompany.elevatorsimulator.EntityInterface;
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,32 +31,38 @@ public class Elevators implements Serializable,EntityInterface  {
     private Integer id;
     @Basic(optional = false)
     @Column(name = "LOWEST_FLOOR")
-    private BigInteger lowestFloor;
+    private Integer lowestFloor;
     @Basic(optional = false)
     @Column(name = "HIGHEST_FLOOR")
-    private BigInteger highestFloor;
+    private Integer highestFloor;
     @Basic(optional = false)
     @Column(name = "STATUS")
     private String status;
     @Basic(optional = false)
     @Column(name = "CURRENT_FLOOR")
-    private BigInteger currentFloor;
+    private Integer currentFloor;
     @Column(name = "MAX_PEOPLE")
-    private BigInteger maxPeople;
+    private Integer maxPeople;
     @Column(name = "MAX_WEIGHT")
-    private BigInteger maxWeight;
+    private Integer maxWeight;
     @JoinColumn(name = "BUILDING_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Buildings buildingId;
-
-    public Elevators() {
+    public Elevators(){
+        
     }
-
-    public Elevators(Integer id) {
+    public Elevators(Integer id, Integer lowestFloor, Integer highestFloor, String status, Integer currentFloor, Buildings buildingId) {
         this.id = id;
+        this.lowestFloor = lowestFloor;
+        this.highestFloor = highestFloor;
+        this.status = status;
+        this.currentFloor = currentFloor;
+        this.buildingId = buildingId;
     }
 
-    public Elevators(Integer id, BigInteger lowestFloor, BigInteger highestFloor, String status, BigInteger currentFloor) {
+
+    
+    public Elevators(Integer id, Integer lowestFloor, Integer highestFloor, String status, Integer currentFloor) {
         this.id = id;
         this.lowestFloor = lowestFloor;
         this.highestFloor = highestFloor;
@@ -74,19 +78,19 @@ public class Elevators implements Serializable,EntityInterface  {
         this.id = id;
     }
 
-    public BigInteger getLowestFloor() {
+    public Integer getLowestFloor() {
         return lowestFloor;
     }
 
-    public void setLowestFloor(BigInteger lowestFloor) {
+    public void setLowestFloor(Integer lowestFloor) {
         this.lowestFloor = lowestFloor;
     }
 
-    public BigInteger getHighestFloor() {
+    public Integer getHighestFloor() {
         return highestFloor;
     }
 
-    public void setHighestFloor(BigInteger highestFloor) {
+    public void setHighestFloor(Integer highestFloor) {
         this.highestFloor = highestFloor;
     }
 
@@ -98,27 +102,27 @@ public class Elevators implements Serializable,EntityInterface  {
         this.status = status;
     }
 
-    public BigInteger getCurrentFloor() {
+    public Integer getCurrentFloor() {
         return currentFloor;
     }
 
-    public void setCurrentFloor(BigInteger currentFloor) {
+    public void setCurrentFloor(Integer currentFloor) {
         this.currentFloor = currentFloor;
     }
 
-    public BigInteger getMaxPeople() {
+    public Integer getMaxPeople() {
         return maxPeople;
     }
 
-    public void setMaxPeople(BigInteger maxPeople) {
+    public void setMaxPeople(Integer maxPeople) {
         this.maxPeople = maxPeople;
     }
 
-    public BigInteger getMaxWeight() {
+    public Integer getMaxWeight() {
         return maxWeight;
     }
 
-    public void setMaxWeight(BigInteger maxWeight) {
+    public void setMaxWeight(Integer maxWeight) {
         this.maxWeight = maxWeight;
     }
 
