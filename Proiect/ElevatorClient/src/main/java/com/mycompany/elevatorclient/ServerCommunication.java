@@ -40,8 +40,7 @@ public class ServerCommunication{
         return true;
     }
     public boolean createAccount(String username,String password,String type){
-        HttpRequest request;
-        request = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/accounts/create"))
                 .POST(BodyPublishers.ofString("username="+username+"&password="+password+"&type="+type))
                 .header("Content-Type", "application/x-www-form-urlencoded")
@@ -56,8 +55,7 @@ public class ServerCommunication{
         return true;
     }
      public boolean createBuilding(String name){
-        HttpRequest request;
-        request = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/buildings/create"))
                 .POST(BodyPublishers.ofString("name="+name))
                 .header("Content-Type", "application/x-www-form-urlencoded")
@@ -197,8 +195,7 @@ public class ServerCommunication{
         return false;
     }
     public boolean addRights(int id, String name){
-        HttpRequest request;
-        request = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/buildings/addRights"))
                 .POST(BodyPublishers.ofString("id="+id+"&name="+name))
                 .header("Content-Type", "application/x-www-form-urlencoded")
@@ -213,8 +210,7 @@ public class ServerCommunication{
         return true;
     }
     public boolean removeRights(int id, String name){
-        HttpRequest request;
-        request = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/buildings/removeRights/id/"+id+"/name/"+name))
                 .DELETE()
                 .build();
@@ -228,8 +224,7 @@ public class ServerCommunication{
         return true;
     }
     public boolean createElevator(String status,int lowestFloor, int highestFloor, int currentFloor, String buildingName){
-        HttpRequest request;
-        request = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/elevators/create"))
                 .POST(BodyPublishers.ofString("status="+status+"&lowestFloor="+lowestFloor+"&highestFloor="+highestFloor+"&currentFloor="+currentFloor+"&buildingName="+buildingName))
                 .header("Content-Type", "application/x-www-form-urlencoded")
@@ -259,8 +254,7 @@ public class ServerCommunication{
         return false;
     }
     public boolean updateElevator(int column,String status,int lowestFloor, int highestFloor, int currentFloor, String buildingName){
-        HttpRequest request;
-        request = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/elevators/update"))
                 .PUT(BodyPublishers.ofString("column="+column+"&status="+status+"&lowestFloor="+lowestFloor+"&highestFloor="+highestFloor+"&currentFloor="+currentFloor+"&buildingName="+buildingName))
                 .header("Content-Type", "application/x-www-form-urlencoded")
@@ -318,8 +312,7 @@ public class ServerCommunication{
         return null;
     }
     public boolean startMoving(int id, int floor){
-        HttpRequest request;
-        request = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/elevators/move"))
                 .PUT(BodyPublishers.ofString("id="+id+"&floor="+floor))
                 .header("Content-Type", "application/x-www-form-urlencoded")
@@ -334,8 +327,7 @@ public class ServerCommunication{
         return false;
     }
     public boolean brokenElevator(int id){
-        HttpRequest request;
-        request = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/elevators/broken"))
                 .PUT(BodyPublishers.ofString("id="+id))
                 .header("Content-Type", "application/x-www-form-urlencoded")
