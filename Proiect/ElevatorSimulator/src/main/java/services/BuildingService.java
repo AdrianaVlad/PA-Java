@@ -25,7 +25,8 @@ import repositories.BuildingRepository;
 @Service
 public class BuildingService {
     BuildingRepository buildingRepository = new BuildingRepository();
-    MoveRequests moveRequests = new MoveRequests();
+    @Autowired
+    MoveRequests moveRequests;
     @Autowired
     public BuildingService(){
         

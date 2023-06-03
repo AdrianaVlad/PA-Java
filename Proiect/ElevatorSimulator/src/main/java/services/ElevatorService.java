@@ -25,7 +25,8 @@ import repositories.ElevatorRepository;
 public class ElevatorService {
     ElevatorRepository elevatorRepository = new ElevatorRepository();
     BuildingRepository buildingRepository = new BuildingRepository();
-    MoveRequests moveRequests = new MoveRequests();
+    @Autowired
+    MoveRequests moveRequests;
     @Autowired
     public ElevatorService(){
         
@@ -83,7 +84,7 @@ public class ElevatorService {
             buildingRepository.refresh();
             Building building = buildingRepository.findByName(buildingName);    
             List<Elevator> elevatorList =  elevatorRepository.findCanReachFloor(floor, building);
-            return elevatorList.stream().filter(e -> e.getStatus().equals("working") || e.getStatus().startsWith("moving")).collect(Collectors.toList());
+            return elevatorList.stream().filter(e -> e.getStatus().equals("working") || e.getStatus().equals("open") || e.getStatus().startsWith("moving")).collect(Collectors.toList());
         } catch (SQLException ex) {
             Logger.getLogger(ElevatorService.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author Vlad Adriana
  */
 @SpringBootApplication
-@ComponentScan({"controllers","repositories","entities","services"})
+@ComponentScan({"controllers","repositories","entities","services","com.mycompany.elevatorsimulator"})
 public class ElevatorSimulator {
 
     public static void main(String[] args) {

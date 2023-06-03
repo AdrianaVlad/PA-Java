@@ -9,11 +9,14 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Vlad Adriana
  */
+@Component
 public class MoveRequests {
     private static Map<Integer,LinkedHashSet<Integer>> moveRequests = new HashMap<>();
     private Set<Integer> threadsFor = new HashSet<>();
