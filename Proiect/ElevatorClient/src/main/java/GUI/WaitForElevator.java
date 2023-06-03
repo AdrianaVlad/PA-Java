@@ -4,7 +4,7 @@
  */
 package GUI;
 
-import static java.awt.BorderLayout.CENTER;
+
 import static java.awt.BorderLayout.NORTH;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,25 +37,22 @@ public class WaitForElevator extends Thread{
         frame.title=new JLabel("");
         frame.add(frame.title,NORTH);
         frame.pack();
-        for(elevator = frame.comms.getElevator(elevator.getId());
+        for(elevator = frame.comms.getElevator(elevator.getCode());
                 elevator.getCurrentFloor()!=clientFloor || stops;
-                elevator = frame.comms.getElevator(elevator.getId())){
+                elevator = frame.comms.getElevator(elevator.getCode())){
             try {
                 if(elevator.getStatus().equals("open")||elevator.getStatus().equals("broken"))
                     frame.title.setText("Elevator stopped at floor:"+Integer.toString(elevator.getCurrentFloor()));
                 else 
                     frame.title.setText("Elevator at floor:"+Integer.toString(elevator.getCurrentFloor()));
                 frame.repaint();
-                sleep(100);
+                sleep(500);
             } catch (InterruptedException ex) {
                 Logger.getLogger(WaitForElevator.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if(!temp){
             InElevator inside = new InElevator(frame,elevator);
-            frame.add(inside,CENTER);
-            frame.pack();
-            frame.repaint();
         }
     }
 }

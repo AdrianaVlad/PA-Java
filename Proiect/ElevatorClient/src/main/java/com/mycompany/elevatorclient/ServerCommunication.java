@@ -296,25 +296,25 @@ public class ServerCommunication{
         }
         return null;
     }
-    public Elevator getElevator(int id){
+    public Elevator getElevator(int code){
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:2434/elevators/"+id))
+                .uri(URI.create("http://localhost:2434/elevators/"+code))
                 .build();
         try {
             HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
             Gson gson = new Gson();
             Map<String, Object> map = new HashMap<>();
             map = (Map<String, Object>) gson.fromJson(response.body(), map.getClass());
-            return new Elevator((int)(double)map.get("id"),(int)(double)map.get("lowestFloor"),(int)(double)map.get("highestFloor"),(int)(double)map.get("currentFloor"),(String) map.get("status"));
+            return new Elevator((int)(double)map.get("id"),(int)(double)map.get("code"),(int)(double)map.get("lowestFloor"),(int)(double)map.get("highestFloor"),(int)(double)map.get("currentFloor"),(String) map.get("status"));
         } catch (IOException | InterruptedException e) {
             System.err.println("Error occurred: " + e.getMessage());
         }
         return null;
     }
-    public boolean startMoving(int id, int floor){
+    public boolean startMoving(int code, int floor){
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/elevators/move"))
-                .PUT(BodyPublishers.ofString("id="+id+"&floor="+floor))
+                .PUT(BodyPublishers.ofString("code="+code+"&floor="+floor))
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .build();
         try {
@@ -326,10 +326,10 @@ public class ServerCommunication{
         }
         return false;
     }
-    public boolean brokenElevator(int id){
+    public boolean brokenElevator(int code){
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/elevators/broken"))
-                .PUT(BodyPublishers.ofString("id="+id))
+                .PUT(BodyPublishers.ofString("code="+code))
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .build();
         try {

@@ -38,10 +38,9 @@ public class SelectElevator extends JPanel{
                 @Override
                 public void actionPerformed(ActionEvent e){
                     frame.getContentPane().removeAll();
-                    frame.comms.startMoving(elevator.getId(),clientFloor);
+                    frame.comms.startMoving(elevator.getCode(),clientFloor);
                     WaitForElevator display = new WaitForElevator(frame,elevator,clientFloor);
                     display.start();
-                    InElevator inElevator = new InElevator(frame,elevator);
                 }
             });
             add(button);

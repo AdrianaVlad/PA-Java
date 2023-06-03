@@ -9,20 +9,23 @@ package mappers;
  * @author Vlad Adriana
  */
 public class Elevator {
-    int id,lowestFloor,highestFloor,currentFloor;
+    int id,code,lowestFloor,highestFloor,currentFloor;
     String status;
 
     public Elevator() {
     }
 
-    public Elevator(int id, int lowestFloor, int highestFloor, int currentFloor, String status) {
+    public Elevator(int id, int code, int lowestFloor, int highestFloor, int currentFloor, String status) {
         this.id = id;
+        this.code=code;
         this.lowestFloor = lowestFloor;
         this.highestFloor = highestFloor;
         this.currentFloor = currentFloor;
         this.status = status;
     }
-
+    public int getCode(){
+        return code;
+    }
     public int getId() {
         return id;
     }
@@ -30,7 +33,9 @@ public class Elevator {
     public void setId(int id) {
         this.id = id;
     }
-
+    public void setCode(int code){
+        this.code=code;
+    }
     public int getLowestFloor() {
         return lowestFloor;
     }

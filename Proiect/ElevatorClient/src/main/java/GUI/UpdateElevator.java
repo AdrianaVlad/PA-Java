@@ -117,6 +117,7 @@ public class UpdateElevator extends JPanel{
         MenuInBuilding menu = new MenuInBuilding(frame,buildingName,flag);
         frame.add(menu,SOUTH);
         ElevatorGrid grid = new ElevatorGrid(frame,buildingName);
+        new Thread(grid).start();
         frame.add(grid,CENTER);
         frame.add(grid.floorNumbers,WEST);
         frame.pack();

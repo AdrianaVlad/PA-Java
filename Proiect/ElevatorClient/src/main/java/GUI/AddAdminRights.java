@@ -84,6 +84,7 @@ public class AddAdminRights extends JPanel{
         MenuInBuilding menu = new MenuInBuilding(frame,buildingName,flag);
         frame.add(menu,SOUTH);
         ElevatorGrid grid = new ElevatorGrid(frame,buildingName);
+        new Thread(grid).start();
         if(grid.floorNumbers!=null)
             frame.add(grid.floorNumbers,WEST);
         frame.add(grid,CENTER);

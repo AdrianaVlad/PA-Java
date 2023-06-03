@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -30,6 +31,9 @@ public class InElevator extends JPanel{
         init();
     }
     private void init(){
+        frame.add(this,CENTER);
+        frame.pack();
+        frame.repaint();
         setLayout(new GridLayout(3,5,10,10));
         display = new WaitForElevator(frame,elevator);
         display.start();
@@ -39,7 +43,7 @@ public class InElevator extends JPanel{
                 @Override
                 public void actionPerformed(ActionEvent e){
                     int floor=Integer.parseInt(e.getActionCommand());
-                    frame.comms.startMoving(elevator.getId(), floor);
+                    frame.comms.startMoving(elevator.getCode(), floor);
                 }
             });
             add(button);
@@ -53,13 +57,13 @@ public class InElevator extends JPanel{
     }
     public void brokenElevator(ActionEvent e){
         if(!broken){
-            frame.comms.brokenElevator(elevator.getId());
+            frame.comms.brokenElevator(elevator.getCode());
             leaveLabel= new JLabel("you can leave! it's just a simulation");
             add(leaveLabel);
         }
     }
     public void leave(ActionEvent e){
-        elevator=frame.comms.getElevator(elevator.getId());   
+        elevator=frame.comms.getElevator(elevator.getCode());   
         if(broken||(elevator!=null&&elevator.getStatus().equals("open"))){
             frame.getContentPane().removeAll();
             frame.getContentPane().removeAll();
