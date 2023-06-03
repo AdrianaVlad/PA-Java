@@ -66,7 +66,7 @@ public class BuildingService {
             Building building = buildingRepository.findByName(name);
             List<Elevator> elevatorList = building.getElevatorsList();
             for(Elevator elevator:elevatorList){
-                moveRequests.delete(elevator.getId());
+                moveRequests.remove(elevator.getCode());
             }
             buildingRepository.delete(building);
             return true;

@@ -57,19 +57,19 @@ public class ElevatorController {
     public ResponseEntity<List<Elevator>> getElevatorsFor(@PathVariable("name") String buildingName, @PathVariable("floor") int floor){
         return new ResponseEntity<>(elevatorService.getValidElevators(buildingName,floor),HttpStatus.FOUND);
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<Elevator> getElevator(@PathVariable("id")int id){
-        return new ResponseEntity<>(elevatorService.getElevator(id), HttpStatus.OK);
+    @GetMapping("/{code}")
+    public ResponseEntity<Elevator> getElevator(@PathVariable("code")int code){
+        return new ResponseEntity<>(elevatorService.getElevator(code), HttpStatus.OK);
     }
     @PutMapping(value="/move",  consumes="application/x-www-form-urlencoded")
-    public ResponseEntity<String> moveElevator(@RequestParam int id, @RequestParam int floor){
-        if(!elevatorService.moveElevator(id,floor))
+    public ResponseEntity<String> moveElevator(@RequestParam int code, @RequestParam int floor){
+        if(!elevatorService.moveElevator(code,floor))
             return new ResponseEntity<>("Elevator not found", HttpStatus.GONE);
         return new ResponseEntity<>("Elevator deleted successfully", HttpStatus.OK);
     }
     @PutMapping(value="/broken",  consumes="application/x-www-form-urlencoded")
-    public ResponseEntity<String> brokenElevator(@RequestParam int id){
-        if(!elevatorService.brokenElevator(id))
+    public ResponseEntity<String> brokenElevator(@RequestParam int code){
+        if(!elevatorService.brokenElevator(code))
             return new ResponseEntity<>("Elevator not found", HttpStatus.GONE);
         return new ResponseEntity<>("Elevator deleted successfully", HttpStatus.OK);
     }

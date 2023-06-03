@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MoveRequests {
     private static Map<Integer,LinkedHashSet<Integer>> moveRequests = new HashMap<>();
-    private Set<Integer> threadsFor = new HashSet<>();
+    private Map<Integer,MovingElevator> threads = new HashMap<>();
     public MoveRequests(){}
     public synchronized void request(int id, int floor){
         LinkedHashSet<Integer> floors = moveRequests.get(id);
@@ -27,21 +27,10 @@ public class MoveRequests {
             floors= new LinkedHashSet<>();
         floors.add(floor);
         moveRequests.put(id, floors);
-        if(!threadsFor.contains(id)){
-            threadsFor.add(id);
-            new MovingElevator(this, id).start();
-        }
-    }
-    public synchronized void delete(int id){
-        moveRequests.remove(id);
-        for (Map.Entry<Integer, LinkedHashSet<Integer>> request : moveRequests.entrySet()) {
-            int key = request.getKey();
-            LinkedHashSet<Integer> value = request.getValue();
-            if(key>id){
-                moveRequests.remove(key);
-                key--;
-                moveRequests.put(key, value);
-            }
+        if(!threads.containsKey(id)){
+            MovingElevator thread = new MovingElevator(this, id);
+            thread.start();
+            threads.put(id,thread);
         }
     }
     public synchronized void remove(int id){
@@ -62,6 +51,6 @@ public class MoveRequests {
         return moveRequests.get(id).stream().findFirst().get();
     }
     public synchronized void endedThread(int id){
-        threadsFor.remove(id);
+        threads.remove(id);
     }
 }

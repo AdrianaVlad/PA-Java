@@ -19,31 +19,32 @@ public class MovingElevator extends Thread{
     ElevatorRepository elevatorRepository  = new ElevatorRepository();
     int currentFloor;
     Elevator elevator;
-    int elevatorId;
-    public MovingElevator(MoveRequests moveRequests, int elevatorId){
+    int elevatorCode;
+    public MovingElevator(MoveRequests moveRequests, int elevatorCode){
         this.moveRequests=moveRequests;
-        this.elevatorId=elevatorId;
+        this.elevatorCode=elevatorCode;
     }
+    @Override
     public void run(){
-        while(moveRequests.exists(elevatorId)){
+        while(moveRequests.exists(elevatorCode)){
             try {
-                elevatorRepository.refresh(elevatorId);
-                elevator = elevatorRepository.findById(elevatorId);
+                elevatorRepository.refresh(elevatorCode);
+                elevator = elevatorRepository.findByCode(elevatorCode);
                 currentFloor=elevator.getCurrentFloor();
-                if(moveRequests.isDestination(elevatorId,elevator.getCurrentFloor())){
-                    moveRequests.fulfilled(elevatorId,elevator.getCurrentFloor());
-                    elevatorRepository.updateStatusById(elevatorId,"open");
+                if(moveRequests.isDestination(elevatorCode,elevator.getCurrentFloor())){
+                    moveRequests.fulfilled(elevatorCode,elevator.getCurrentFloor());
+                    elevatorRepository.updateStatusByCode(elevatorCode,"open");
                     sleep(8000);
                 }
                 else{
-                    int destination = moveRequests.getFirst(elevatorId);
+                    int destination = moveRequests.getFirst(elevatorCode);
                     if(destination>currentFloor){
-                        elevatorRepository.updateStatusById(elevatorId,"movingUp");
-                        elevatorRepository.updateFloorById(elevatorId,currentFloor+1);
+                        elevatorRepository.updateStatusByCode(elevatorCode,"movingUp");
+                        elevatorRepository.updateFloorByCode(elevatorCode,currentFloor+1);
                     }
                     else{
-                        elevatorRepository.updateStatusById(elevatorId,"movingDown");
-                        elevatorRepository.updateFloorById(elevatorId,currentFloor-1);
+                        elevatorRepository.updateStatusByCode(elevatorCode,"movingDown");
+                        elevatorRepository.updateFloorByCode(elevatorCode,currentFloor-1);
                     }
                 }
                 sleep(2000);
@@ -52,11 +53,11 @@ public class MovingElevator extends Thread{
             }
         }
         try {
-            elevatorRepository.refresh(elevatorId);
-            elevator = elevatorRepository.findById(elevatorId);
+            elevatorRepository.refresh(elevatorCode);
+            elevator = elevatorRepository.findByCode(elevatorCode);
             if(!elevator.getStatus().equals("broken"))
-                elevatorRepository.updateStatusById(elevatorId, "working");
-            moveRequests.endedThread(elevatorId);
+                elevatorRepository.updateStatusByCode(elevatorCode, "working");
+            moveRequests.endedThread(elevatorCode);
         } catch (SQLException ex) {
             Logger.getLogger(MovingElevator.class.getName()).log(Level.SEVERE, null, ex);
         }

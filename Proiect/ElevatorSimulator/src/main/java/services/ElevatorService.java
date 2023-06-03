@@ -35,7 +35,8 @@ public class ElevatorService {
         try {
             Building building = buildingRepository.findByName(buildingName);
             int id = elevatorRepository.findNextId();
-            elevatorRepository.insert(new Elevator(id,lowestFloor,highestFloor,status,currentFloor,building));
+            int code=elevatorRepository.findNextCode();
+            elevatorRepository.insert(new Elevator(id,code,lowestFloor,highestFloor,status,currentFloor,building));
             return true;
         }
         catch (SQLException ex) {
@@ -48,7 +49,7 @@ public class ElevatorService {
             Building building = buildingRepository.findByName(buildingName);
             List<Elevator> elevatorList = building.getElevatorsList();
             elevatorRepository.delete(elevatorList.get(column-1));
-            moveRequests.delete(elevatorList.get(column-1).getId());
+            moveRequests.remove(elevatorList.get(column-1).getCode());
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
@@ -90,20 +91,20 @@ public class ElevatorService {
         }
         return null;
     }
-    public Elevator getElevator(int id){
+    public Elevator getElevator(int code){
         try {
             elevatorRepository.refresh();
-            return elevatorRepository.findById(id);
+            return elevatorRepository.findByCode(code);
         } catch (SQLException ex) {
             Logger.getLogger(ElevatorService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    public boolean moveElevator(int id, int floor){
+    public boolean moveElevator(int code, int floor){
         try {
-            Elevator elevator = elevatorRepository.findById(id);
+            Elevator elevator = elevatorRepository.findByCode(code);
             if(elevator!=null){
-                moveRequests.request(id,floor);
+                moveRequests.request(code,floor);
                 return true;
             }
         } catch (SQLException ex) {
@@ -111,12 +112,12 @@ public class ElevatorService {
         }
         return false;
     }
-    public boolean brokenElevator(int id){
+    public boolean brokenElevator(int code){
         try {
-            Elevator elevator = elevatorRepository.findById(id);
+            Elevator elevator = elevatorRepository.findByCode(code);
             if(elevator!=null){
-                moveRequests.remove(id);
-                elevatorRepository.updateStatusById(id, "broken");
+                moveRequests.remove(code);
+                elevatorRepository.updateStatusByCode(code, "broken");
                 return true;
             }
         } catch (SQLException ex) {

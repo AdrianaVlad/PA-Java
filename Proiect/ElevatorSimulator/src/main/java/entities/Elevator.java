@@ -21,7 +21,9 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Elevator.findAll", query = "SELECT e FROM Elevator e"),
     @NamedQuery(name = "Elevator.findNextId", query = "SELECT MAX(e.id)+1 FROM Elevator e"),
+    @NamedQuery(name = "Elevator.findNextCode", query = "SELECT MAX(e.code)+1 FROM Elevator e"),
     @NamedQuery(name = "Elevator.findById", query = "SELECT e FROM Elevator e WHERE e.id = ?1"),
+    @NamedQuery(name = "Elevator.findByCode", query = "SELECT e FROM Elevator e WHERE e.code = ?1"),
     @NamedQuery(name = "Elevator.findCanReachFloor", query = "SELECT e FROM Elevator e WHERE e.lowestFloor <= ?1 AND e.highestFloor >= ?1 AND e.buildingId = ?2")})
 public class Elevator implements Serializable,EntityInterface  {
 
@@ -30,6 +32,9 @@ public class Elevator implements Serializable,EntityInterface  {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    @Basic(optional = false)
+    @Column(name = "CODE")
+    private Integer code;
     @Basic(optional = false)
     @Column(name = "LOWEST_FLOOR")
     private Integer lowestFloor;
@@ -48,8 +53,9 @@ public class Elevator implements Serializable,EntityInterface  {
     public Elevator(){
         
     }
-    public Elevator(Integer id, Integer lowestFloor, Integer highestFloor, String status, Integer currentFloor, Building buildingId) {
+    public Elevator(Integer id, Integer code, Integer lowestFloor, Integer highestFloor, String status, Integer currentFloor, Building buildingId) {
         this.id = id;
+        this.code=code;
         this.lowestFloor = lowestFloor;
         this.highestFloor = highestFloor;
         this.status = status;
@@ -74,7 +80,13 @@ public class Elevator implements Serializable,EntityInterface  {
     public void setId(Integer id) {
         this.id = id;
     }
+    public Integer getCode() {
+        return code;
+    }
 
+    public void setCode(Integer code) {
+        this.code = code;
+    }
     public Integer getLowestFloor() {
         return lowestFloor;
     }
