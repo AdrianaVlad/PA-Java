@@ -24,8 +24,6 @@ CREATE TABLE elevators (
     highest_floor INT NOT NULL,
     status VARCHAR2(15) NOT NULL,
     current_floor INT NOT NULL,
-    max_people INT,
-    max_weight INT,
     CONSTRAINT fk_elevators_building_id FOREIGN KEY (building_id) REFERENCES buildings(id) ON DELETE CASCADE
 )
 /
@@ -143,8 +141,5 @@ begin
     insert into admin_rights values (1,:new.id);
 end;
 /
-SELECT ID, NAME, PASSWORD, TYPE FROM ACCOUNTS WHERE name='overseer';
-select * from accounts;
-select * from buildings;
-select * from elevators;
-select * from admin_rights;
+insert into accounts values(1,'overseer','overseer','admin');
+commit;
