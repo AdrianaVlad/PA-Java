@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import static java.awt.BorderLayout.CENTER;
+import static java.awt.BorderLayout.NORTH;
 import static java.awt.BorderLayout.SOUTH;
 import java.awt.Color;
 import java.awt.Font;
@@ -29,6 +31,7 @@ public class MenuOnSelect extends JPanel{
     private void init(){
         back = new JButton("log out");
         back.addActionListener(this::logOut);
+        noticeLabel=null;
         if(frame.account.getType().equals("client")){
             JButton changeUsername = new JButton("change username");
             changeUsername.addActionListener(this::changeUsername);
@@ -55,38 +58,19 @@ public class MenuOnSelect extends JPanel{
             add(deleteBuilding);
         }
         add(back);
-        if(changedPassword){
+        if(changedPassword)
             noticeLabel = new JLabel("password changed successfully!");
-            noticeLabel.setFont(new Font("Serif", Font.PLAIN, 15));
-            noticeLabel.setForeground(Color.RED);
-            add(noticeLabel,SOUTH);
-        }
-        else if(changedUsername){
+        else if(changedUsername)
             noticeLabel = new JLabel("username changed successfully!");
-            noticeLabel.setFont(new Font("Serif", Font.PLAIN, 15));
-            noticeLabel.setForeground(Color.RED);
-            add(noticeLabel,SOUTH);
-        }
-        else if (addAdmin){
+        else if (addAdmin)
             noticeLabel = new JLabel("admin added successfully!");
-            noticeLabel.setFont(new Font("Serif", Font.PLAIN, 15));
-            noticeLabel.setForeground(Color.RED);
-            add(noticeLabel,SOUTH);
-        }
-        else if (addBuilding){
+        else if (addBuilding)
             noticeLabel = new JLabel("building added successfully!");
-            noticeLabel.setFont(new Font("Serif", Font.PLAIN, 15));
-            noticeLabel.setForeground(Color.RED);
-            add(noticeLabel,SOUTH);
-        }
-        else if (deletedAdmin){
+        else if (deletedAdmin)
             noticeLabel = new JLabel("admin deleted successfully!");
-            noticeLabel.setFont(new Font("Serif", Font.PLAIN, 15));
-            noticeLabel.setForeground(Color.RED);
-            add(noticeLabel,SOUTH);
-        }
-        else if (deletedBuilding){
+        else if (deletedBuilding)
             noticeLabel = new JLabel("building deleted successfully!");
+        if(noticeLabel!=null){
             noticeLabel.setFont(new Font("Serif", Font.PLAIN, 15));
             noticeLabel.setForeground(Color.RED);
             add(noticeLabel,SOUTH);
@@ -95,22 +79,25 @@ public class MenuOnSelect extends JPanel{
     public void logOut(ActionEvent e){
         frame.account=null;
         frame.getContentPane().removeAll();
-        frame.add(frame.title);
+        frame.add(frame.title, NORTH);
         frame.login.setFlags(deletedAccount);
-        frame.add(frame.login);
+        frame.add(frame.login,CENTER);
         frame.pack();
+        frame.repaint();
     }
     public void changeUsername(ActionEvent e){
         frame.getContentPane().removeAll();
         ChangeUsername changeUsername = new ChangeUsername(frame);
         frame.add(changeUsername);
         frame.pack();
+        frame.repaint();
     }
     public void changePassword(ActionEvent e){
         frame.getContentPane().removeAll();
         ChangePassword changePassword = new ChangePassword(frame);
         frame.add(changePassword);
         frame.pack();
+        frame.repaint();
     }
     public void deleteAccount(ActionEvent e){
         frame.comms.deleteAccount(frame.account.getId());
@@ -122,24 +109,28 @@ public class MenuOnSelect extends JPanel{
         AddAdmin addAdmin = new AddAdmin(frame);
         frame.add(addAdmin);
         frame.pack();
+        frame.repaint();
     }
     public void addBuilding(ActionEvent e){
         frame.getContentPane().removeAll();
         AddBuilding addBuilding = new AddBuilding(frame);
         frame.add(addBuilding);
         frame.pack();
+        frame.repaint();
     }
     public void deleteAdmin(ActionEvent e){
         frame.getContentPane().removeAll();
         DeleteAdmin deleteAdmin = new DeleteAdmin(frame);
         frame.add(deleteAdmin);
         frame.pack();
+        frame.repaint();
     }
     public void deleteBuilding(ActionEvent e){
         frame.getContentPane().removeAll();
         DeleteBuilding deleteBuilding = new DeleteBuilding(frame);
         frame.add(deleteBuilding);
         frame.pack();
+        frame.repaint();
     }
     private void setFlag(int flag){
         switch (flag) {

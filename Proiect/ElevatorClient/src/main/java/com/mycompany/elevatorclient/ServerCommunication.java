@@ -5,6 +5,7 @@
 package com.mycompany.elevatorclient;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -17,14 +18,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import mappers.Account;
+import mappers.Elevator;
 
 /**
  *
  * @author Vlad Adriana
  */
 public class ServerCommunication{
+    HttpClient client = HttpClient.newHttpClient();
     public boolean checkPassword(String username,String password){
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/accounts/username/"+username+"/password/"+password))
                 .build();
@@ -38,7 +40,6 @@ public class ServerCommunication{
         return true;
     }
     public boolean createAccount(String username,String password,String type){
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/accounts/create"))
@@ -55,7 +56,6 @@ public class ServerCommunication{
         return true;
     }
      public boolean createBuilding(String name){
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/buildings/create"))
@@ -72,7 +72,6 @@ public class ServerCommunication{
         return true;
     }
     public boolean checkName(String name){
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/buildings/name/"+name))
                 .build();
@@ -86,7 +85,6 @@ public class ServerCommunication{
         return true;
     }
     public Account getAccountByName(String username){
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/accounts/allinfo/"+username))
                 .build();
@@ -106,7 +104,6 @@ public class ServerCommunication{
     }
 
     public List<String> getAllBuildingNames() {
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/buildings/names"))
                 .build();
@@ -123,7 +120,6 @@ public class ServerCommunication{
     }
 
     public List<String> getBuildingNamesFor(int id) {
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/accounts/buildingNames/"+id))
                 .build();
@@ -139,14 +135,13 @@ public class ServerCommunication{
         return null;
     }
     public boolean deleteAccount(int id){
-        HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/accounts/"+id))
                 .DELETE()
                 .build();
 
         try {
-            HttpResponse<Void> response = httpClient.send(request, BodyHandlers.discarding());
+            HttpResponse<Void> response = client.send(request, BodyHandlers.discarding());
             int statusCode = response.statusCode();
             return statusCode==200;
         } catch (Exception e) {
@@ -155,7 +150,6 @@ public class ServerCommunication{
         return false;
     }
     public boolean changeUsername(int id, String username){
-        HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/accounts/"+id+"/username"))
                 .header("Content-Type", "application/x-www-form-urlencoded")
@@ -163,7 +157,7 @@ public class ServerCommunication{
                 .build();
 
         try {
-            HttpResponse<Void> response = httpClient.send(request, BodyHandlers.discarding());
+            HttpResponse<Void> response = client.send(request, BodyHandlers.discarding());
             int statusCode = response.statusCode();
             return statusCode==200;
         } catch (Exception e) {
@@ -172,7 +166,6 @@ public class ServerCommunication{
         return false;
     }
     public boolean changePassword(int id, String password){
-        HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/account/"+id+"/password"))
                 .header("Content-Type", "application/x-www-form-urlencoded")
@@ -180,7 +173,7 @@ public class ServerCommunication{
                 .build();
 
         try {
-            HttpResponse<Void> response = httpClient.send(request, BodyHandlers.discarding());
+            HttpResponse<Void> response = client.send(request, BodyHandlers.discarding());
             int statusCode = response.statusCode();
             return statusCode==200;
         } catch (Exception e) {
@@ -189,14 +182,13 @@ public class ServerCommunication{
         return false;
     }
     public boolean deleteBuilding(String name){
-        HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/buildings/"+name))
                 .DELETE()
                 .build();
 
         try {
-            HttpResponse<Void> response = httpClient.send(request, BodyHandlers.discarding());
+            HttpResponse<Void> response = client.send(request, BodyHandlers.discarding());
             int statusCode = response.statusCode();
             return statusCode==200;
         } catch (Exception e) {
@@ -205,7 +197,6 @@ public class ServerCommunication{
         return false;
     }
     public boolean addRights(int id, String name){
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/buildings/addRights"))
@@ -222,7 +213,6 @@ public class ServerCommunication{
         return true;
     }
     public boolean removeRights(int id, String name){
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request;
         request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:2434/buildings/removeRights/id/"+id+"/name/"+name))
@@ -236,5 +226,127 @@ public class ServerCommunication{
             System.err.println("Error occurred: " + e.getMessage());
         }
         return true;
+    }
+    public boolean createElevator(String status,int lowestFloor, int highestFloor, int currentFloor, String buildingName){
+        HttpRequest request;
+        request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:2434/elevators/create"))
+                .POST(BodyPublishers.ofString("status="+status+"&lowestFloor="+lowestFloor+"&highestFloor="+highestFloor+"&currentFloor="+currentFloor+"&buildingName="+buildingName))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+            int statusCode = response.statusCode();
+            return statusCode == 201;   
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error occurred: " + e.getMessage());
+        }
+        return true;
+    }
+    public boolean deleteElevator(int number,String buildingName){
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:2434/elevators/number/"+number+"/buildingName/"+buildingName))
+                .DELETE()
+                .build();
+
+        try {
+            HttpResponse<Void> response = client.send(request, BodyHandlers.discarding());
+            int statusCode = response.statusCode();
+            return statusCode==200;
+        } catch (Exception e) {
+            System.err.println("Error occurred: " + e.getMessage());
+        }
+        return false;
+    }
+    public boolean updateElevator(int column,String status,int lowestFloor, int highestFloor, int currentFloor, String buildingName){
+        HttpRequest request;
+        request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:2434/elevators/update"))
+                .PUT(BodyPublishers.ofString("column="+column+"&status="+status+"&lowestFloor="+lowestFloor+"&highestFloor="+highestFloor+"&currentFloor="+currentFloor+"&buildingName="+buildingName))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+            int statusCode = response.statusCode();
+            return statusCode == 200;   
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error occurred: " + e.getMessage());
+        }
+        return false;
+    }
+    public List<Elevator> getElevatorsFor(String buildingName){
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:2434/elevators/allFor/"+buildingName))
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+            Gson gson = new Gson();
+            List<Elevator> elevatorList = (List<Elevator>) gson.fromJson(response.body(), new TypeToken<List<Elevator>>() {}.getType());
+            return elevatorList;
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error occurred: " + e.getMessage());
+        }
+        return null;
+    }
+    public List<Elevator> getValidElevators(int floor,String buildingName){
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:2434/elevators/validFor/"+buildingName+"/"+floor))
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+            Gson gson = new Gson();
+            List<Elevator> elevatorList = (List<Elevator>) gson.fromJson(response.body(), new TypeToken<List<Elevator>>() {}.getType());
+            return elevatorList;
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error occurred: " + e.getMessage());
+        }
+        return null;
+    }
+    public Elevator getElevator(int id){
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:2434/elevators/"+id))
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+            Gson gson = new Gson();
+            Map<String, Object> map = new HashMap<>();
+            map = (Map<String, Object>) gson.fromJson(response.body(), map.getClass());
+            return new Elevator((int)(double)map.get("id"),(int)(double)map.get("lowestFloor"),(int)(double)map.get("highestFloor"),(int)(double)map.get("currentFloor"),(String) map.get("status"));
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error occurred: " + e.getMessage());
+        }
+        return null;
+    }
+    public boolean startMoving(int id, int floor){
+        HttpRequest request;
+        request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:2434/elevators/move"))
+                .PUT(BodyPublishers.ofString("id="+id+"&floor="+floor))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+            int statusCode = response.statusCode();
+            return statusCode == 200;   
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error occurred: " + e.getMessage());
+        }
+        return false;
+    }
+    public boolean brokenElevator(int id){
+        HttpRequest request;
+        request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:2434/elevators/broken"))
+                .PUT(BodyPublishers.ofString("id="+id))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+            int statusCode = response.statusCode();
+            return statusCode == 200;   
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error occurred: " + e.getMessage());
+        }
+        return false;
     }
 }

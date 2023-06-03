@@ -65,6 +65,7 @@ public class DeleteAdmin extends JPanel{
             this.init();
             frame.add(this);
             frame.pack();
+            frame.repaint();
         }  
     }
     public void toSelect (ActionEvent e){

@@ -65,6 +65,7 @@ public class SigninPanel extends JPanel{
         LoginPanel login = new LoginPanel(frame,false);
         frame.add(login,CENTER);
         frame.pack();
+        frame.repaint();
     }
     public void checkAccount(ActionEvent e){
         String username = usernameField.getText();
@@ -79,6 +80,7 @@ public class SigninPanel extends JPanel{
             this.init();
             frame.add(this);
             frame.pack();
+            frame.repaint();
         }
     }
     public void createAccount(String username,String password){
@@ -89,6 +91,7 @@ public class SigninPanel extends JPanel{
             LoginPanel login = new LoginPanel(frame,true);
             frame.add(login,CENTER);
             frame.pack();
+            frame.repaint();
         }
     }
 }

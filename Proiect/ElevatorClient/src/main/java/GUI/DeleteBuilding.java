@@ -64,6 +64,7 @@ public class DeleteBuilding extends JPanel{
             this.init();
             frame.add(this);
             frame.pack();
+            frame.repaint();
         }  
     }
     public void toSelect (ActionEvent e){

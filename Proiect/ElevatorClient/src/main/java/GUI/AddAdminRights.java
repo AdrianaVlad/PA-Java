@@ -4,8 +4,10 @@
  */
 package GUI;
 
+import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
 import static java.awt.BorderLayout.SOUTH;
+import static java.awt.BorderLayout.WEST;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -13,7 +15,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import mappers.Account;
 
@@ -27,6 +28,7 @@ public class AddAdminRights extends JPanel{
     JLabel statement,usernameLabel,failedLabel;
     JTextField usernameField = new JTextField(20);
     JButton submit,back;
+    int flag=0;
     boolean failedAttempt;
     public AddAdminRights(MainFrame frame, String buildingName){
         this.frame=frame;
@@ -61,6 +63,7 @@ public class AddAdminRights extends JPanel{
         Account account = frame.comms.getAccountByName(username);
         if(account!=null&&account.getType().equals("admin")){
             frame.comms.addRights(account.getId(),buildingName);
+            flag=1;
             toBuilding(e);
         }
         else{
@@ -70,6 +73,7 @@ public class AddAdminRights extends JPanel{
             this.init();
             frame.add(this);
             frame.pack();
+            frame.repaint();
         }  
     }
     public void toBuilding (ActionEvent e){
@@ -77,9 +81,13 @@ public class AddAdminRights extends JPanel{
         JLabel title = new JLabel("Building: "+buildingName);
         title.setFont(new Font("Serif", Font.PLAIN, 30));
         frame.add(title,NORTH);
-        MenuInBuilding menu = new MenuInBuilding(frame,buildingName);
-        menu.setFlags(1);
+        MenuInBuilding menu = new MenuInBuilding(frame,buildingName,flag);
         frame.add(menu,SOUTH);
+        ElevatorGrid grid = new ElevatorGrid(frame,buildingName);
+        if(grid.floorNumbers!=null)
+            frame.add(grid.floorNumbers,WEST);
+        frame.add(grid,CENTER);
         frame.pack();
+        frame.repaint();
     }
 }

@@ -12,34 +12,42 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.text.NumberFormat;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import mappers.Account;
+import javax.swing.JFormattedTextField;
+import javax.swing.text.NumberFormatter;
+import mappers.Elevator;
 
 /**
  *
  * @author Vlad Adriana
  */
-public class RemoveAdminRights extends JPanel{
+public class DeleteElevator extends JPanel{
     MainFrame frame;
     String buildingName;
-    JLabel statement,usernameLabel,failedLabel;
-    JTextField usernameField = new JTextField(20);
+    JLabel statement,numberLabel,failedLabel;
+    JFormattedTextField numberField;
     JButton submit,back;
     boolean failedAttempt;
     int flag=0;
-    public RemoveAdminRights (MainFrame frame, String buildingName){
+    public DeleteElevator(MainFrame frame, String buildingName){
         this.frame=frame;
         this.buildingName=buildingName;
+        NumberFormat numberFormat = NumberFormat.getNumberInstance();
+        NumberFormatter formatter = new NumberFormatter(numberFormat);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false);
+        numberField = new JFormattedTextField(formatter);
         init();
     }
-     private void init(){
-        statement = new JLabel("Please add admin details:");
+    private void init(){
+        statement = new JLabel("Please add elevator details:");
         statement.setFont(new Font("Serif", Font.PLAIN, 30));
-        usernameLabel = new JLabel("Username:");
-        usernameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+        numberLabel = new JLabel("Number (of column):");
+        numberLabel.setFont(new Font("Serif", Font.PLAIN, 20));
         submit = new JButton("submit");
         submit.addActionListener(this::submit);
         back = new JButton("back to building");
@@ -47,24 +55,24 @@ public class RemoveAdminRights extends JPanel{
         setLayout(new GridLayout(5, 2, 40, 50));
         add(statement);
         add(new JLabel(" "));
-        add(usernameLabel);
-        add(usernameField);
+        add(numberLabel);
+        add(numberField);
         add(submit);
         add(back);
         if(failedAttempt){
-            failedLabel = new JLabel("No admin with that username!");
+            failedLabel = new JLabel("There aren't that many elevators in the building!");
             failedLabel.setFont(new Font("Serif", Font.PLAIN, 15));
             failedLabel.setForeground(Color.RED);
             add(failedLabel);
         }
     }
     public void submit(ActionEvent e){
-        String username = usernameField.getText();
-        Account account = frame.comms.getAccountByName(username);
-        if(account!=null&&account.getType().equals("admin")){
-            frame.comms.removeRights(account.getId(),buildingName);
-            flag=2;
-            toBuilding(e);
+        List<Elevator> elevatorList = frame.comms.getElevatorsFor(buildingName);
+        int column = (int) numberField.getValue();
+        if(elevatorList.size()>=column){
+            frame.comms.deleteElevator(column,buildingName);
+            flag=4;
+            toBuilding(e); 
         }
         else{
             failedAttempt = true;
@@ -74,7 +82,7 @@ public class RemoveAdminRights extends JPanel{
             frame.add(this);
             frame.pack();
             frame.repaint();
-        }  
+        }
     }
     public void toBuilding (ActionEvent e){
         frame.getContentPane().removeAll();

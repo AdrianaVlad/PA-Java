@@ -92,6 +92,7 @@ public class LoginPanel extends JPanel{
         MenuOnSelect menu = new MenuOnSelect(frame,flag);
         frame.add(menu,SOUTH);
         frame.pack();
+        frame.repaint();
     }
     private void moveToSign( ActionEvent e){
         frame.remove(this);
@@ -100,6 +101,7 @@ public class LoginPanel extends JPanel{
         SigninPanel signin = new SigninPanel(frame);
         frame.add(signin,CENTER);
         frame.pack();
+        frame.repaint();
     }
     public void checkAccount(ActionEvent e){
         String username = usernameField.getText();
@@ -116,6 +118,7 @@ public class LoginPanel extends JPanel{
             this.init();
             frame.add(this);
             frame.pack();
+            frame.repaint();
         }
     }
     public void setFlags(boolean flag){
@@ -127,5 +130,6 @@ public class LoginPanel extends JPanel{
         this.init();
         frame.add(this);
         frame.pack();
+        frame.repaint();
     }
 }
