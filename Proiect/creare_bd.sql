@@ -19,6 +19,7 @@ CREATE TABLE buildings (
 
 CREATE TABLE elevators (
     id INT NOT NULL PRIMARY KEY,
+    code INT NOT NULL UNIQUE,
     building_id INT NOT NULL,
     lowest_floor INT NOT NULL,
     highest_floor INT NOT NULL,
