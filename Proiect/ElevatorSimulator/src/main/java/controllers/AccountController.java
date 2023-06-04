@@ -51,25 +51,25 @@ public class AccountController {
         else
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
-    @GetMapping("/buildingNames/{id}")
-    public ResponseEntity<List<String>> getBuildingsById(@PathVariable("id") int id){
-        return new ResponseEntity<>(accountService.getBuildingsById(id),HttpStatus.FOUND);
+    @GetMapping("/buildingNames/{username}")
+    public ResponseEntity<List<String>> getBuildingsById(@PathVariable("username") String username){
+        return new ResponseEntity<>(accountService.getBuildingsByName(username),HttpStatus.FOUND);
     }
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deleteAccount(@PathVariable("id") int id){
-        if(!accountService.deleteAccount(id))
+    @DeleteMapping(value = "/{username}")
+    public ResponseEntity<String> deleteAccount(@PathVariable("username") String username){
+        if(!accountService.deleteAccount(username))
             return new ResponseEntity<>("Account not found", HttpStatus.GONE);
         return new ResponseEntity<>("Account deleted successfully", HttpStatus.OK);
     }
-    @PutMapping(value="/{id}/username",consumes="application/x-www-form-urlencoded")
-    public ResponseEntity<String> updateUsername(@PathVariable int id, @RequestParam String username) {
-        if(!accountService.updateUsername(id,username))
+    @PutMapping(value="/{oldName}/username",consumes="application/x-www-form-urlencoded")
+    public ResponseEntity<String> updateUsername(@PathVariable String oldName, @RequestParam String username) {
+        if(!accountService.updateUsername(oldName,username))
              return new ResponseEntity<>("Account not found", HttpStatus.GONE);
         return new ResponseEntity<>("Account updated successfully", HttpStatus.OK);
     }
-    @PutMapping(value="/{id}/password",consumes="application/x-www-form-urlencoded")
-    public ResponseEntity<String> updatePassword(@PathVariable int id, @RequestParam String password) {
-        if(!accountService.updatePassword(id,password))
+    @PutMapping(value="/{username}/password",consumes="application/x-www-form-urlencoded")
+    public ResponseEntity<String> updatePassword(@PathVariable String username, @RequestParam String password) {
+        if(!accountService.updatePassword(username,password))
              return new ResponseEntity<>("Account not found", HttpStatus.GONE);
         return new ResponseEntity<>("Account updated successfully", HttpStatus.OK);
     }

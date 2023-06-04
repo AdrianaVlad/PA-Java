@@ -59,10 +59,10 @@ public class AccountService {
         }
         return null;
     }
-    public List<String> getBuildingsById(int id){
+    public List<String> getBuildingsByName(String username){
         try {
             accountRepository.refresh();
-            List<Building> buildingsList = accountRepository.findById(id).getBuildingsList();
+            List<Building> buildingsList = accountRepository.findByName(username).getBuildingsList();
             List<String> buildingsNames = new ArrayList<>();
             for(Building building : buildingsList){
                 buildingsNames.add(building.getName());
@@ -73,9 +73,9 @@ public class AccountService {
         }
         return null;
     }
-    public boolean deleteAccount(int id){
+    public boolean deleteAccount(String username){
         try {
-            Account account = accountRepository.findById(id);
+            Account account = accountRepository.findByName(username);
             accountRepository.delete(account);
             return true;
         } catch (SQLException ex) {
@@ -83,18 +83,18 @@ public class AccountService {
             return false;
         }
     }
-    public boolean updateUsername(int id,String username){
+    public boolean updateUsername(String oldName,String username){
         try {
-            accountRepository.updateNameById(id,username);
+            accountRepository.updateNameById(accountRepository.findByName(oldName).getId(),username);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
-    public boolean updatePassword(int id,String username){
+    public boolean updatePassword(String username,String password){
         try {
-            accountRepository.updatePasswordById(id,username);
+            accountRepository.updatePasswordById(accountRepository.findByName(username).getId(),password);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
